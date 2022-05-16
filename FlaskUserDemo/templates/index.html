@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for row in data %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.first_name }}</td>
+        <td>{{ row.last_name}}</td>
+        <td>{{ row.email}}</td>
+        <td>
+            <a href="/view?id={{row.id}}">View</a>
+            {% if session['role'] == 'admin' %}
+            <a href="/edit?id={{row.id}}">Edit</a>
+            <a href="/delete?id={{row.id}}">Delete</a>
+            {% endif %}
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+<a href="{{url_for('register')}}">Add a new record</a>
+{% endblock %}
