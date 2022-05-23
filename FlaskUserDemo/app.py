@@ -112,7 +112,7 @@ def list_users():
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users" )
             result = cursor.fetchall()
-    return render_template('index.html',data=result)
+    return render_template('users.html',data=result)
 
 # TODO: Add a '/profile' (view_user) route that uses SELECT
 @app.route('/view')
@@ -198,7 +198,13 @@ def edit():
                 cursor.execute("SELECT * FROM users WHERE id = %s", request.args['id'])
                 result = cursor.fetchone()
         return render_template('edit.html', result=result)
-
+@app.route('/movies')
+def list_movie():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM movies" )
+            result = cursor.fetchall()
+    return render_template('movies.html',data=result)
 @app.route('/checkemail')
 def check_email():
     with create_connection() as connection:

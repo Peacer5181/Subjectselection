@@ -3,6 +3,7 @@
 {% block content %}
 <a href="{{url_for('register')}}">Sign Up!</a>
 <br />
+<a href="{{ url_for('list_movie')}}">Movie list</a>
 {% if 'logged_in' in session %}
 <a href="{{url_for('list_users')}}">View all user</a>
 <a href="/view?id={{session['id']}}">View</a>
