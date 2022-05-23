@@ -40,6 +40,7 @@
     <Content Include="templates\home.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\movies.html" />
+    <Content Include="templates\movie_watched.html" />
     <Content Include="templates\register.html" />
     <Content Include="templates\setup.html" />
     <Content Include="templates\users.html" />

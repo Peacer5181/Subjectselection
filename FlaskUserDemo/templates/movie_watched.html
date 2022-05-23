@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+<table>
+    <tr>
+        <th>User</th>
+        <th>Movie</th>
+    </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{ row.first_name }}</td>
+        <td>{{ row.name }}</td>
+    {% endfor %}
+</table>
+{% endblock %}

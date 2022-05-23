@@ -136,6 +136,17 @@ def delete():
             connection.commit()
     return redirect('/dashboard')
 
+@app.route('/movie_watched')
+def movie_watched():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""Select * FROM users 
+                            JOIN user_movie ON user_movie.user_id = users.id
+                            JOIN movies ON movies.id = user_movie.movie_id 
+                            WHERE users.id=%s""", session['id'])
+            result = cursor.fetchall()
+            print(result)
+    return render_template('movie_watched.html', result=result)
 # TODO: Add an '/edit_user' route that uses UPDATE
 @app.route('/edit', methods=['GET', 'POST'])
 def edit():
