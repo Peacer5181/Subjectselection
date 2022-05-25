@@ -21,7 +21,8 @@ def restrict():
         'list_users',
         'view_user',
         'edit',
-        'delete'
+        'delete',
+        'watch'
     ]
     if 'logged_in' not in session and request.endpoint in restricted_pages:
         return redirect('/login')
@@ -135,7 +136,15 @@ def delete():
             cursor.execute(sql, values)
             connection.commit()
     return redirect('/dashboard')
-
+@app.route('/unwatch')
+def unwatch():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """DELETE FROM user_movie WHERE id = %s"""
+            values = (request.args['id'])
+            cursor.execute(sql, values)
+            connection.commit()
+    return redirect('/')
 @app.route('/movie_watched')
 def movie_watched():
     with create_connection() as connection:
@@ -209,6 +218,14 @@ def edit():
                 cursor.execute("SELECT * FROM users WHERE id = %s", request.args['id'])
                 result = cursor.fetchone()
         return render_template('edit.html', result=result)
+@app.route('/watch')
+def watch():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:                
+            cursor.execute("INSERT INTO user_movie (user_id,movie_id) VALUES (%s,%s)",
+                            (session['id'],request.args['id']))   
+            connection.commit()               
+    return redirect('/movie_watched')
 @app.route('/movies')
 def list_movie():
     with create_connection() as connection:

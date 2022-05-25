@@ -5,11 +5,16 @@
     <tr>
         <th>User</th>
         <th>Movie</th>
+        <th>Action</th>
     </tr>
     {% for row in result %}
     <tr>
         <td>{{ row.first_name }}</td>
-        <td>{{ row.name }}</td>
+        <td>{{ row.movie_name }}</td>
+        <td>
+            <a href="/unwatch?id={{row['user_movie.id']}}">Unwatch</a>
+        </td>
+    </tr>
     {% endfor %}
 </table>
 {% endblock %}

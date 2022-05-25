@@ -13,12 +13,12 @@
     {% for row in data %}
     <tr>
         <td>{{ row.id }}</td>
-        <td>{{ row.name }}</td>
+        <td>{{ row.movie_name }}</td>
         <td>{{ row.genre}}</td>
         <td>{{ row.year_realse}}</td>
         <td>{{ row.summary }}</td>
         <td>
-            
+            <a href="/watch?id={{row.id}}">Watch</a>
             <a href="/delete?id={{row.id}}">Delete</a>
         </td>
 
