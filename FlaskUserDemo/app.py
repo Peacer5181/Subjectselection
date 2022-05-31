@@ -128,7 +128,9 @@ def view_user():
 @app.route('/delete')
 def delete():
     if session['role'] != 'admin':
-        return abort(404)
+        error_message=("You don't have the power",'cmon',"you wouldn't dare")
+        flash(error_message[random.randint(0,2)])
+        return redirect('/')
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = """DELETE FROM users WHERE id = %s"""
@@ -137,7 +139,7 @@ def delete():
             connection.commit()
     return redirect('/dashboard')
 @app.route('/unwatch')
-def unwatch():
+def unwatch():        
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = """DELETE FROM user_movie WHERE id = %s"""
@@ -149,10 +151,21 @@ def unwatch():
 def movie_watched():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("""Select * FROM users 
-                            JOIN user_movie ON user_movie.user_id = users.id
-                            JOIN movies ON movies.id = user_movie.movie_id 
-                            WHERE users.id=%s""", session['id'])
+            sql = """Select *,GROUP_CONCAT(genre.Genre_name) FROM users 
+                    JOIN user_movie ON user_movie.user_id = users.id
+                    JOIN movies ON movies.id = user_movie.movie_id
+                    JOIN movie_genre ON  movie_genre.movie_id = movies.id 
+                    JOIN genre ON genre.genre_id = movie_genre.genre_id
+                    WHERE users.id = %s
+                    GROUP by movies.id"""
+            if session['role'] != 'admin':
+                values = session['id']
+            else :
+                if 'id' in request.args:
+                    values = request.args['id']
+                else:
+                    values = session['id']
+            cursor.execute(sql,values)
             result = cursor.fetchall()
             print(result)
     return render_template('movie_watched.html', result=result)
@@ -230,7 +243,10 @@ def watch():
 def list_movie():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM movies" )
+            cursor.execute("""SELECT *,GROUP_CONCAT(genre.Genre_name) FROM movies
+                            JOIN movie_genre ON movies.id=movie_genre.movie_id
+                            JOIN genre ON genre.genre_id=movie_genre.genre_id
+                            GROUP BY movies.id""" )
             result = cursor.fetchall()
     return render_template('movies.html',data=result)
 @app.route('/checkemail')

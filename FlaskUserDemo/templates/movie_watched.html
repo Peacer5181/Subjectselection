@@ -5,12 +5,14 @@
     <tr>
         <th>User</th>
         <th>Movie</th>
+        <th>Genre</th>
         <th>Action</th>
     </tr>
     {% for row in result %}
     <tr>
         <td>{{ row.first_name }}</td>
         <td>{{ row.movie_name }}</td>
+        <td>{{ row["GROUP_CONCAT(genre.Genre_name)"]}}</td>
         <td>
             <a href="/unwatch?id={{row['user_movie.id']}}">Unwatch</a>
         </td>
