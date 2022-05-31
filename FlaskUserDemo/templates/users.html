@@ -20,6 +20,7 @@
             {% if session['role'] == 'admin' %}
             <a href="/edit?id={{row.id}}">Edit</a>
             <a href="/delete?id={{row.id}}">Delete</a>
+            <a href="/movie_watched?id={{row.id}}">Watched List</a>
             {% endif %}
         </td>
 
