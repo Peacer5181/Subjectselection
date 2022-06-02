@@ -1,7 +1,37 @@
 {% extends 'layout.html' %}
 {% block title %} {% endblock %}
 {% block content %}
-<table>
+<div class="row">
+    <div class="col-9">
+        
+        <div class="row">
+            {% for row in result %}
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">Poster</div>
+                    <div class="card-body">
+                        <p>{{ row.movie_name}}</p>
+                    </div>
+                    <div class="card-footer">{{ row["GROUP_CONCAT(genre.Genre_name)"]}}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                {% for row in result %}
+                {{ row.movie_name}}
+                {% endfor %}
+            </div>
+            <div class="card-footer">Footer</div>
+        </div>
+    </div>
+</div>
+<!--<table>
     <tr>
         <th>User</th>
         <th>Movie</th>
@@ -18,5 +48,5 @@
         </td>
     </tr>
     {% endfor %}
-</table>
+</table>-->
 {% endblock %}

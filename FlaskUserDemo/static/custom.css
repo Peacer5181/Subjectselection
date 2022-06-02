@@ -14,3 +14,36 @@ tr:nth-child(2n) {
     background-color: lightgrey;
 }
 
+.card-deck {
+    @extend .card-group;
+    gap: $spacer * 2;
+    // create a gutter // de-couple the border @include media-breakpoint-up(sm)
+
+{
+    > .card
+
+{
+    &:not(:first-child)
+
+{
+    border-top-left-radius: $card-border-radius;
+    border-bottom-left-radius: $card-border-radius;
+}
+
+&:not(:last-child) {
+    border-top-right-radius: $card-border-radius;
+    border-bottom-right-radius: $card-border-radius;
+}
+
++ .card {
+    border-left: 1px solid $card-border-color;
+}
+
+}
+}
+
+// optionally change the breakpoint for column layout on mobile
+@include media-breakpoint-down(md) {
+    flex-direction: column;
+}
+}
