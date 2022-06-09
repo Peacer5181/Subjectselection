@@ -11,18 +11,18 @@
     <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}" />
 </head>
 <body>
-    <nav>
+    {#<nav>
         {% if 'logged_in' in session %}
         You are logged in as {{ session.first_name }}. <a href="/logout">Log out</a>
         {% else %}
         You are logged out. <a href="/login">Login</a>
         {% endif %}
-    </nav>
+    </nav>#}
     {% block content %}{% endblock %}
-    <ul>
+    {#<ul>
         {% for message in get_flashed_messages() %}
         <li>{{ message }}</li>
         {% endfor %}
-    </ul>
+    </ul>#}
 </body>
 </html>
