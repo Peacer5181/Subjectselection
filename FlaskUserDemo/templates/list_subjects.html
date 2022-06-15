@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Description</th>
+    </tr>
+    {% for row in data %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.Subject }}</td>
+        <td>{{ row.Description}}</td>
+
+    </tr>
+    {% endfor %}
+
+{% endblock %}

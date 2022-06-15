@@ -3,7 +3,7 @@
 {% block content %}
 {#<a href="{{url_for('register')}}">Sign Up!</a>
 <br />
-<a href="{{ url_for('list_movie')}}">Movie list</a>
+
 {% if 'logged_in' in session %}
 <a href="{{ url_for('movie_watched')}}">Movie watched</a>
 <br />
@@ -13,4 +13,5 @@
 {% endif %}#}
 <a href="{{url_for('list_users')}}">View all user</a>
 <br />
+<a href="{{ url_for('list_subjects')}}">Subject list</a>
 {% endblock %}

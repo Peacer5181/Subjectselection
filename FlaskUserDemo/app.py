@@ -240,16 +240,13 @@ def list_users():
 #                            (session['id'],request.args['id']))   
 #            connection.commit()               
 #    return redirect('/movie_watched')
-#@app.route('/movies')
-#def list_movie():
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            cursor.execute("""SELECT *,GROUP_CONCAT(genre.Genre_name) FROM movies
-#                            JOIN movie_genre ON movies.id=movie_genre.movie_id
-#                            JOIN genre ON genre.genre_id=movie_genre.genre_id
-#                            GROUP BY movies.id""" )
-#            result = cursor.fetchall()
-#    return render_template('movies.html',data=result)
+@app.route('/list_subjects')
+def list_subjects():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""SELECT * FROM subjects""" )
+            result = cursor.fetchall()
+    return render_template('list_subjects.html',data=result)
 #@app.route('/checkemail')
 #def check_email():
 #    with create_connection() as connection:
