@@ -64,47 +64,48 @@ def home():
 #    session.clear()
 #    return redirect('/')
 
-## TODO: Add a '/register' (add_user) route that uses INSERT
-#@app.route('/register', methods=['GET','POST'])
-#def register():
-#    if request.method == 'POST' :
-#        password = request.form['password']
-#        encrypted_password = hashlib.sha256(password.encode()).hexdigest()
-#        if request.files['avatar'].filename:
-#            avatar_image = request.files["avatar"]
-#            ext = os.path.splitext(avatar_image.filename)[1]
-#            avatar_filename= str(uuid.uuid4())[:8] + ext
-#            avatar_image.save("static/images/"+avatar_filename)
-#        else:
-#            avatar_filename = None
-#        with create_connection() as connection:
-#            with connection.cursor() as cursor:
-#                try :
-#                    cursor.execute("INSERT INTO users (first_name, last_name, email, password, avatar) VALUES (%s,%s,%s,%s,%s)",
-#                                   (request.form['first_name'],
-#                                    request.form['last_name'],
-#                                    request.form['email'],
-#                                    encrypted_password,
-#                                    avatar_filename))   
-#                    connection.commit()
-#                except pymysql.err.IntegrityError:
-#                    flash('Email already exist')
-#                    return redirect('/register')
-#                sql = "SELECT * FROM users WHERE email=%s AND password=%s"
-#                values = (
-#                    request.form['email'],
-#                    encrypted_password
-#                )               
-#                cursor.execute(sql, values)
-#                result = cursor.fetchone()               
-#        if result:
-#            session['logged_in'] = True
-#            session['first_name'] = result['first_name']
-#            session['role']=result['role']
-#            session['id'] = result['id']
-#        return redirect('/')
-#    else :
-#        return render_template('register.html')
+# TODO: Add a '/register' (add_user) route that uses INSERT
+@app.route('/add_user', methods=['GET','POST'])
+def add_user():
+    if request.method == 'POST' :
+        password = request.form['password']
+        encrypted_password = hashlib.sha256(password.encode()).hexdigest()
+        #if request.files['avatar'].filename:
+        #    avatar_image = request.files["avatar"]
+        #    ext = os.path.splitext(avatar_image.filename)[1]
+        #    avatar_filename= str(uuid.uuid4())[:8] + ext
+        #    avatar_image.save("static/images/"+avatar_filename)
+        #else:
+        #    avatar_filename = None
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                try :
+                    cursor.execute("INSERT INTO students (First_name, Last_name, Date_of_birth, Year_level, Email, Password ) VALUES (%s,%s,%s,%s,%s,%s)",
+                                   (request.form['first_name'],
+                                    request.form['last_name'],
+                                    request.form['date_of_birth'],
+                                    request.form['year_level'],
+                                    request.form['email'],
+                                    encrypted_password))                                       
+                    connection.commit()
+                except pymysql.err.IntegrityError:
+                    flash('Email already exist')
+                    return redirect('/add_user')
+        #        sql = "SELECT * FROM users WHERE email=%s AND password=%s"
+        #        values = (
+        #            request.form['email'],
+        #            encrypted_password
+        #        )               
+        #        cursor.execute(sql, values)
+        #        result = cursor.fetchone()               
+        #if result:
+        #    session['logged_in'] = True
+        #    session['first_name'] = result['first_name']
+        #    session['role']=result['role']
+        #    session['id'] = result['id']
+        return redirect('/')
+    else :
+        return render_template('add_user.html')
 
 
 # TODO: Add a '/dashboard' (list_users) route that uses SELECT
@@ -247,20 +248,20 @@ def list_subjects():
             cursor.execute("""SELECT * FROM subjects""" )
             result = cursor.fetchall()
     return render_template('list_subjects.html',data=result)
-#@app.route('/checkemail')
-#def check_email():
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            sql = "SELECT * FROM users WHERE email=%s "
-#            values = (
-#                request.args['email']
-#            )
-#            cursor.execute(sql, values)
-#            result = cursor.fetchone()
-#    if result:
-#        return jsonify({ 'status': 'Error'})
-#    else :
-#        return jsonify({ 'status': 'OK'})
+@app.route('/checkemail')
+def check_email():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = "select * from users where email=%s "
+            values = (
+                request.args['email']
+            )
+            cursor.execute(sql, values)
+            result = cursor.fetchone()
+    if result:
+        return jsonify({ 'status': 'error'})
+    else :
+        return jsonify({ 'status': 'ok'})
 if __name__ == '__main__':
     import os
 

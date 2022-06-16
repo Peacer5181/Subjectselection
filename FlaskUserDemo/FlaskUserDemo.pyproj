@@ -36,12 +36,13 @@
     <Content Include="requirements.txt" />
     <Content Include="static\custom.css" />
     <Content Include="static\images\default.png" />
+    <Content Include="templates\add_subject.html" />
     <Content Include="templates\edit.html" />
     <Content Include="templates\home.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\list_subjects.html" />
     <Content Include="templates\movie_watched.html" />
-    <Content Include="templates\register.html" />
+    <Content Include="templates\add_user.html" />
     <Content Include="templates\setup.html" />
     <Content Include="templates\list_users.html" />
     <Content Include="templates\layout.html" />
