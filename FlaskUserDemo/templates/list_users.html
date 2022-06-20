@@ -7,7 +7,7 @@
         <th>First</th>
         <th>Last</th>
         <th>Email</th>
-        <!--<th>Actions</th>-->
+        <th>Actions</th>
     </tr>
     {% for row in data %}
     <tr>
@@ -16,14 +16,15 @@
         <td>{{ row.Last_name}}</td>
         <td>{{ row.Email}}</td>
         
-    {#<td>
-        <a href="/view?id={{row.id}}">View</a>
+    <td>
+        <a href="/delete_user?id={{row.id}}">Delete</a>
+        {#<a href="/view?id={{row.id}}">View</a>
         {% if session['role'] == 'admin' %}
         <a href="/edit?id={{row.id}}">Edit</a>
-        <a href="/delete?id={{row.id}}">Delete</a>
+        
         <a href="/movie_watched?id={{row.id}}">Watched List</a>
-        {% endif %}
-    </td>#}
+        {% endif %}#}
+    </td>
 
     </tr>
     {% endfor %}

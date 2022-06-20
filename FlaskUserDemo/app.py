@@ -142,20 +142,20 @@ def list_users():
 #            result = cursor.fetchone()
 #    return render_template('users_view.html', result=result)
 
-## TODO: Add a '/delete_user' route that uses DELETE
-#@app.route('/delete')
-#def delete():
-#    if session['role'] != 'admin':
-#        error_message=("You don't have the power",'cmon',"you wouldn't dare")
-#        flash(error_message[random.randint(0,2)])
-#        return redirect('/')
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            sql = """DELETE FROM users WHERE id = %s"""
-#            values = (request.args['id'])
-#            cursor.execute(sql, values)
-#            connection.commit()
-#    return redirect('/dashboard')
+# TODO: Add a '/delete_user' route that uses DELETE
+@app.route('/delete_user')
+def delete_user():
+    #if session['role'] != 'admin':
+    #    error_message=("You don't have the power",'cmon',"you wouldn't dare")
+    #    flash(error_message[random.randint(0,2)])
+    #    return redirect('/')
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """DELETE FROM students WHERE id = %s"""
+            values = (request.args['id'])
+            cursor.execute(sql, values)
+            connection.commit()
+    return redirect('/list_users')
 #@app.route('/unwatch')
 #def unwatch():        
 #    with create_connection() as connection:
