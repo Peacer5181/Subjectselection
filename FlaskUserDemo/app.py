@@ -107,7 +107,23 @@ def add_user():
     else :
         return render_template('add_user.html')
 
-
+@app.route('/add_subject', methods=['GET','POST'])
+def add_subject():
+    if request.method == 'POST' :
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                try :
+                    cursor.execute("INSERT INTO subjects ( Subject, Description) VALUES (%s,%s)",
+                                    (request.form['subject'],
+                                    request.form['description'],
+                                    ))                                       
+                    connection.commit()
+                except pymysql.err.IntegrityError:
+                    flash('Subject already exist')
+                    return redirect('/add_subject')
+        return redirect('/')
+    else :
+        return render_template('add_subject.html')
 # TODO: Add a '/dashboard' (list_users) route that uses SELECT
 @app.route('/list_users')
 def list_users():

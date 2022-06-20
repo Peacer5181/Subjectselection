@@ -1,11 +1,16 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
+{% block title %} Add a new subject {% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" required />
+    <br />
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+    <label for="des">Description</label>
+    <input type="text" id="des" name="description" />
+    <br />
 
-</body>
-</html>
+    <input type="submit" value="Add subject" />
+</form>
+
+{% endblock %}
