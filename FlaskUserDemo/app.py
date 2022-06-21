@@ -156,6 +156,16 @@ def delete_user():
             cursor.execute(sql, values)
             connection.commit()
     return redirect('/list_users')
+
+@app.route('/delete_subject')
+def delete_subject():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """DELETE FROM subjects WHERE id = %s"""
+            values = (request.args['id'])
+            cursor.execute(sql, values)
+            connection.commit()
+    return redirect('/list_subjects')
 #@app.route('/unwatch')
 #def unwatch():        
 #    with create_connection() as connection:
