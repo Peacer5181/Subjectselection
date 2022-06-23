@@ -124,6 +124,7 @@ def add_subject():
         return redirect('/')
     else :
         return render_template('add_subject.html')
+
 # TODO: Add a '/dashboard' (list_users) route that uses SELECT
 @app.route('/list_users')
 def list_users():
@@ -157,6 +158,7 @@ def delete_user():
             connection.commit()
     return redirect('/list_users')
 
+# TODO: Add a '/delete_subject' route that uses DELETE
 @app.route('/delete_subject')
 def delete_subject():
     with create_connection() as connection:
@@ -197,68 +199,73 @@ def delete_subject():
 #            result = cursor.fetchall()
 #            print(result)
 #    return render_template('movie_watched.html', result=result)
-## TODO: Add an '/edit_user' route that uses UPDATE
-#@app.route('/edit', methods=['GET', 'POST'])
-#def edit():
-#    if session['role'] != 'admin' and str(session['id']) != request.args['id']:
-#        flash("you don't have the permission to edit this user")
-#        return redirect('/view?id=' + request.args['id'])
-#    if request.method == 'POST':
-        
-#        if request.files['avatar'].filename:
-#            avatar_image = request.files["avatar"]
-#            ext = os.path.splitext(avatar_image.filename)[1]
-#            avatar_filename = str(uuid.uuid4())[:8] + ext
-#            avatar_image.save("static/images/" + avatar_filename)
-#            if request.form['old_avatar'] != 'None' and os.path.exists("static/iamges/" + request.form['old_avatar']):
-#                os.remove("static/images/" + request.form['old_avatar'])
-#        elif request.form['old_avatar'] != 'None' :
-#            avatar_filename = request.form['old_avatar']
-#        else:
-#            avatar_filename = None
 
-#        with create_connection() as connection:
-#            with connection.cursor() as cursor:
-#                if request.form['password']:
-#                    password = request.form['password']
-#                    encrypted_password = hashlib.sha256(password.encode()).hexdigest()               
-#                    sql = """UPDATE users SET
-#                        first_name = %s,
-#                        last_name = %s,
-#                        email = %s,
-#                        password = %s,
-#                        avatar = %s
-#                        WHERE id = %s"""
-#                    values = (
-#                        request.form['first_name'],
-#                        request.form['last_name'],
-#                        request.form['email'],
-#                        encrypted_password,
-#                        avatar_filename,
-#                        request.form['id']
-#                    )
-#                else:
-#                    sql = """UPDATE users SET
-#                        first_name = %s,
-#                        last_name = %s,
-#                        email = %s,
-#                        avatar = %s
-#                        WHERE id = %s"""
-#                    values = (
-#                        request.form['first_name'],
-#                        request.form['last_name'],
-#                        request.form['email'],
-#                        avatar_filename,
-#                        request.form['id'])
-#                cursor.execute(sql, values)
-#                connection.commit()
-#        return redirect('/view?id=' + request.form['id'])
-#    else:
-#        with create_connection() as connection:
-#            with connection.cursor() as cursor:
-#                cursor.execute("SELECT * FROM users WHERE id = %s", request.args['id'])
-#                result = cursor.fetchone()
-#        return render_template('edit.html', result=result)
+# TODO: Add an '/edit_user' route that uses UPDATE
+@app.route('/update_user', methods=['GET', 'POST'])
+def update_user():
+    #if session['role'] != 'admin' and str(session['id']) != request.args['id']:
+    #    flash("you don't have the permission to edit this user")
+    #    return redirect('/view?id=' + request.args['id'])
+    if request.method == 'POST':
+        
+        #if request.files['avatar'].filename:
+        #    avatar_image = request.files["avatar"]
+        #    ext = os.path.splitext(avatar_image.filename)[1]
+        #    avatar_filename = str(uuid.uuid4())[:8] + ext
+        #    avatar_image.save("static/images/" + avatar_filename)
+        #    if request.form['old_avatar'] != 'None' and os.path.exists("static/iamges/" + request.form['old_avatar']):
+        #        os.remove("static/images/" + request.form['old_avatar'])
+        #elif request.form['old_avatar'] != 'None' :
+        #    avatar_filename = request.form['old_avatar']
+        #else:
+        #    avatar_filename = None
+
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                if request.form['password']:
+                    password = request.form['password']
+                    encrypted_password = hashlib.sha256(password.encode()).hexdigest()               
+                    sql = """UPDATE students SET
+                        First_name = %s,
+                        Last_name = %s,             
+                        Date_of_birth = %s,
+                        Year_level = %s,
+                        Email = %s,
+                        Password = %s
+                        WHERE id = %s"""
+                    values = (
+                        request.form['first_name'],
+                        request.form['last_name'],
+                        request.form['date_of_birth'],
+                        request.form['year_level'],
+                        request.form['email'],
+                        encrypted_password,
+                        request.form['id'])
+                    
+                else:
+                    sql = """UPDATE students SET
+                        First_name = %s,
+                        Last_name = %s,
+                        Date_of_birth = %s,
+                        Year_level = %s,
+                        Email = %s
+                        WHERE id = %s"""
+                    values = (
+                        request.form['first_name'],
+                        request.form['last_name'],
+                        request.form['date_of_birth'],
+                        request.form['year_level'],
+                        request.form['email'],                       
+                        request.form['id'])
+                cursor.execute(sql, values)
+                connection.commit()
+        return redirect('/list_users')
+    else:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM students WHERE id = %s", request.args['id'])
+                result = cursor.fetchone()
+        return render_template('update_user.html', result=result)
 #@app.route('/watch')
 #def watch():
 #    with create_connection() as connection:

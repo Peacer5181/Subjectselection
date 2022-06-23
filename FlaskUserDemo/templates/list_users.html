@@ -6,6 +6,8 @@
         <th>ID</th>
         <th>First</th>
         <th>Last</th>
+        <th>Date of Birth</th>
+        <th>Year level</th>
         <th>Email</th>
         <th>Actions</th>
     </tr>
@@ -14,13 +16,16 @@
         <td>{{ row.id }}</td>
         <td>{{ row.First_name }}</td>
         <td>{{ row.Last_name}}</td>
+        <td>{{ row.Date_of_birth}}</td>
+        <td>{{ row.Year_level}}</td>
         <td>{{ row.Email}}</td>
         
     <td>
         <a href="/delete_user?id={{row.id}}">Delete</a>
+        <a href="/update_user?id={{row.id}}">Edit</a>
         {#<a href="/view?id={{row.id}}">View</a>
         {% if session['role'] == 'admin' %}
-        <a href="/edit?id={{row.id}}">Edit</a>
+        
         
         <a href="/movie_watched?id={{row.id}}">Watched List</a>
         {% endif %}#}
