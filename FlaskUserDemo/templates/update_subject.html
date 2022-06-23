@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block title %} Add a new subject {% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{{ result.id }}">
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" value="{{ result.Subject }}" />
+    <br />
+
+    <label for="des">Description</label>
+    <input type="text" id="des" name="description" value="{{ result.Description }}"/>
+    <br />
+
+    <input type="submit" value="Save Change" />
+</form>
+
+{% endblock %}

@@ -200,6 +200,30 @@ def delete_subject():
 #            print(result)
 #    return render_template('movie_watched.html', result=result)
 
+# TODO: Add a '/update_subject' route that uses UPDATE
+@app.route('/update_subject', methods=['GET', 'POST'])
+def update_subject():
+    if request.method == 'POST':
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = """UPDATE subjects SET 
+                        Subject = %s,
+                        Description = %s
+                        WHERE id = %s"""
+                values = (
+                    request.form['subject'],
+                    request.form['description'],
+                    request.form['id'])
+                cursor.execute(sql, values)
+                connection.commit()
+        return redirect('/list_subjects')
+    else:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM subjects WHERE id = %s", request.args['id'])
+                result = cursor.fetchone()
+        return render_template('update_subject.html', result=result)
+
 # TODO: Add an '/edit_user' route that uses UPDATE
 @app.route('/update_user', methods=['GET', 'POST'])
 def update_user():
