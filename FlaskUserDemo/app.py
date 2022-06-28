@@ -8,9 +8,9 @@ app.register_blueprint(setup)
 
 def create_connection():
     return pymysql.connect(
-        host='10.0.0.17',
-        user='xuanguyen',
-        password='ARPAS',
+        host='localhost',
+        user='root',
+        password='Khangcanthi18105',
         db='xuanguyen_subjectselection',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
