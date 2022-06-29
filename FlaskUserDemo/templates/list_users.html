@@ -23,11 +23,12 @@
     <td>
         <a href="/delete_user?id={{row.id}}">Delete</a>
         <a href="/update_user?id={{row.id}}">Edit</a>
+        <a href="/subject_chosen?id={{row.id}}">Subject chosen</a>
         {#<a href="/view?id={{row.id}}">View</a>
         {% if session['role'] == 'admin' %}
         
         
-        <a href="/movie_watched?id={{row.id}}">Watched List</a>
+        
         {% endif %}#}
     </td>
 

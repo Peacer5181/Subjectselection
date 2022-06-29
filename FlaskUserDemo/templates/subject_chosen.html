@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<table>
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Year level</th>
+        <th>Subject</th>
+    </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{ row.First_name }}</td>
+        <td>{{ row.Last_name }}</td>
+        <td>{{ row.Year_level }}</td>
+        <td>{{ row.Subject }}</td>
+        <!--<td>
+            <a href="/unwatch?id={{row['user_movie.id']}}">Unwatch</a>
+        </td>-->
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -177,28 +177,25 @@ def delete_subject():
 #            cursor.execute(sql, values)
 #            connection.commit()
 #    return redirect('/')
-#@app.route('/movie_watched')
-#def movie_watched():
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            sql = """Select *,GROUP_CONCAT(genre.Genre_name) FROM users 
-#                    JOIN user_movie ON user_movie.user_id = users.id
-#                    JOIN movies ON movies.id = user_movie.movie_id
-#                    JOIN movie_genre ON  movie_genre.movie_id = movies.id 
-#                    JOIN genre ON genre.genre_id = movie_genre.genre_id
-#                    WHERE users.id = %s
-#                    GROUP by movies.id"""
-#            if session['role'] != 'admin':
-#                values = session['id']
-#            else :
-#                if 'id' in request.args:
-#                    values = request.args['id']
-#                else:
-#                    values = session['id']
-#            cursor.execute(sql,values)
-#            result = cursor.fetchall()
-#            print(result)
-#    return render_template('movie_watched.html', result=result)
+@app.route('/subject_chosen')
+def subject_chosen():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """Select * FROM students 
+                    JOIN student_subject ON student_subject.student_id = students.id
+                    JOIN subjects ON subjects.id = student_subject.subject_id
+                    WHERE students.id = %s"""
+            #if session['role'] != 'admin':
+            #    values = session['id']
+            #else :
+            #    if 'id' in request.args:
+            values = request.args['id']
+                #else:
+                #    values = session['id']
+            cursor.execute(sql,values)
+            result = cursor.fetchall()
+            print(result)
+    return render_template('subject_chosen.html', result=result)
 
 # TODO: Add a '/update_subject' route that uses UPDATE
 @app.route('/update_subject', methods=['GET', 'POST'])
