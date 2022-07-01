@@ -44,7 +44,7 @@ def login():
         encrypted_password = hashlib.sha256(password.encode()).hexdigest()
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM users WHERE email=%s AND password=%s"
+                sql = "SELECT * FROM students WHERE email=%s AND password=%s"
                 values = (
                     request.form['email'],
                     encrypted_password
@@ -54,7 +54,7 @@ def login():
         if result:
             session['logged_in'] = True
             session['First_name'] = result['First_name']
-            session['role']=result['role']
+            session['role']=result['Role']
             session['id'] = result['id']
             return redirect("/")
         else:
@@ -75,13 +75,6 @@ def add_user():
     if request.method == 'POST' :
         password = request.form['password']
         encrypted_password = hashlib.sha256(password.encode()).hexdigest()
-        #if request.files['avatar'].filename:
-        #    avatar_image = request.files["avatar"]
-        #    ext = os.path.splitext(avatar_image.filename)[1]
-        #    avatar_filename= str(uuid.uuid4())[:8] + ext
-        #    avatar_image.save("static/images/"+avatar_filename)
-        #else:
-        #    avatar_filename = None
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 try :
@@ -96,18 +89,18 @@ def add_user():
                 except pymysql.err.IntegrityError:
                     flash('Email already exist')
                     return redirect('/add_user')
-        #        sql = "SELECT * FROM users WHERE email=%s AND password=%s"
-        #        values = (
-        #            request.form['email'],
-        #            encrypted_password
-        #        )               
-        #        cursor.execute(sql, values)
-        #        result = cursor.fetchone()               
-        #if result:
-        #    session['logged_in'] = True
-        #    session['first_name'] = result['first_name']
-        #    session['role']=result['role']
-        #    session['id'] = result['id']
+                sql = "SELECT * FROM students WHERE Email=%s AND Password=%s"
+                values = (
+                    request.form['email'],
+                    encrypted_password
+                )               
+                cursor.execute(sql, values)
+                result = cursor.fetchone()               
+        if result:
+            session['logged_in'] = True
+            session['first_name'] = result['First_name']
+            session['role']=result['Role']
+            session['id'] = result['id']
         return redirect('/')
     else :
         return render_template('add_user.html')
