@@ -15,54 +15,53 @@ def create_connection():
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
-#@app.before_request
-#def restrict():
-#    restricted_pages = [
-#        'list_users',
-#        'view_user',
-#        'edit',
-#        'delete',
-#        'watch'
-#    ]
-#    if 'logged_in' not in session and request.endpoint in restricted_pages:
-#        return redirect('/login')
+@app.before_request
+def restrict():
+    restricted_pages = [
+        'list_users',
+        'update_user',
+        'add_subject',
+        'delete'
+    ]
+    if 'logged_in' not in session and request.endpoint in restricted_pages:
+        return redirect('/login')
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-#@app.route('/login', methods=['GET', 'POST'])
-#def login():
-#    if request.method == 'POST':
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
 
-#        password = request.form['password']
-#        encrypted_password = hashlib.sha256(password.encode()).hexdigest()
-#        with create_connection() as connection:
-#            with connection.cursor() as cursor:
-#                sql = "SELECT * FROM users WHERE email=%s AND password=%s"
-#                values = (
-#                    request.form['email'],
-#                    encrypted_password
-#                )
-#                cursor.execute(sql, values)
-#                result = cursor.fetchone()
-#        if result:
-#            session['logged_in'] = True
-#            session['first_name'] = result['first_name']
-#            session['role']=result['role']
-#            session['id'] = result['id']
-#            return redirect("/")
-#        else:
-#            error_message=('invalid username or password','hello','hey look')
-#            flash(error_message[random.randint(0,2)])
-#            return redirect("/login")
-#    else:
-#        return render_template('login.html')
+        password = request.form['password']
+        encrypted_password = hashlib.sha256(password.encode()).hexdigest()
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM users WHERE email=%s AND password=%s"
+                values = (
+                    request.form['email'],
+                    encrypted_password
+                )
+                cursor.execute(sql, values)
+                result = cursor.fetchone()
+        if result:
+            session['logged_in'] = True
+            session['First_name'] = result['First_name']
+            session['role']=result['role']
+            session['id'] = result['id']
+            return redirect("/")
+        else:
+            error_message=('invalid username or password','hello','hey look')
+            flash(error_message[random.randint(0,2)])
+            return redirect("/login")
+    else:
+        return render_template('login.html')
 
-#@app.route('/logout')
-#def logout():
-#    session.clear()
-#    return redirect('/')
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 # TODO: Add a '/register' (add_user) route that uses INSERT
 @app.route('/add_user', methods=['GET','POST'])
