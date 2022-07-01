@@ -19,9 +19,15 @@ def create_connection():
 def restrict():
     restricted_pages = [
         'list_users',
+        'add_user',
         'update_user',
         'add_subject',
-        'delete'
+        'update_subject',
+        'delete_user',
+        'delete_subject',
+        'choose',
+        'unchoose',
+        'subject_chosen'
     ]
     if 'logged_in' not in session and request.endpoint in restricted_pages:
         return redirect('/login')
