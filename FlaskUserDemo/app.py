@@ -53,7 +53,7 @@ def login():
                 result = cursor.fetchone()
         if result:
             session['logged_in'] = True
-            session['First_name'] = result['First_name']
+            session['first_name'] = result['First_name']
             session['role']=result['Role']
             session['id'] = result['id']
             return redirect("/")
