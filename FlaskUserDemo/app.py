@@ -44,7 +44,7 @@ def login():
         encrypted_password = hashlib.sha256(password.encode()).hexdigest()
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM students WHERE email=%s AND password=%s"
+                sql = "SELECT * FROM users WHERE email=%s AND password=%s"
                 values = (
                     request.form['email'],
                     encrypted_password
@@ -78,7 +78,7 @@ def add_user():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 try :
-                    cursor.execute("INSERT INTO students (First_name, Last_name, Date_of_birth, Year_level, Email, Password ) VALUES (%s,%s,%s,%s,%s,%s)",
+                    cursor.execute("INSERT INTO users (First_name, Last_name, Date_of_birth, Year_level, Email, Password ) VALUES (%s,%s,%s,%s,%s,%s)",
                                    (request.form['first_name'],
                                     request.form['last_name'],
                                     request.form['date_of_birth'],
@@ -89,7 +89,7 @@ def add_user():
                 except pymysql.err.IntegrityError:
                     flash('Email already exist')
                     return redirect('/add_user')
-                sql = "SELECT * FROM students WHERE Email=%s AND Password=%s"
+                sql = "SELECT * FROM users WHERE Email=%s AND Password=%s"
                 values = (
                     request.form['email'],
                     encrypted_password
@@ -128,7 +128,7 @@ def add_subject():
 def list_users():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM students" )
+            cursor.execute("SELECT * FROM users" )
             result = cursor.fetchall()
     return render_template('list_users.html',data=result)
 
@@ -150,7 +150,7 @@ def delete_user():
     #    return redirect('/')
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = """DELETE FROM students WHERE id = %s"""
+            sql = """DELETE FROM users WHERE id = %s"""
             values = (request.args['id'])
             cursor.execute(sql, values)
             connection.commit()
@@ -179,10 +179,10 @@ def delete_subject():
 def subject_chosen():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = """Select * FROM students 
-                    JOIN student_subject ON student_subject.student_id = students.id
+            sql = """Select * FROM users 
+                    JOIN student_subject ON student_subject.student_id = users.id
                     JOIN subjects ON subjects.id = student_subject.subject_id
-                    WHERE students.id = %s"""
+                    WHERE users.id = %s"""
             #if session['role'] != 'admin':
             #    values = session['id']
             #else :
@@ -244,7 +244,7 @@ def update_user():
                 if request.form['password']:
                     password = request.form['password']
                     encrypted_password = hashlib.sha256(password.encode()).hexdigest()               
-                    sql = """UPDATE students SET
+                    sql = """UPDATE users SET
                         First_name = %s,
                         Last_name = %s,             
                         Date_of_birth = %s,
@@ -262,7 +262,7 @@ def update_user():
                         request.form['id'])
                     
                 else:
-                    sql = """UPDATE students SET
+                    sql = """UPDATE users SET
                         First_name = %s,
                         Last_name = %s,
                         Date_of_birth = %s,
@@ -282,7 +282,7 @@ def update_user():
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM students WHERE id = %s", request.args['id'])
+                cursor.execute("SELECT * FROM users WHERE id = %s", request.args['id'])
                 result = cursor.fetchone()
         return render_template('update_user.html', result=result)
 @app.route('/choose')
