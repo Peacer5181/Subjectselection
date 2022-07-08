@@ -186,10 +186,10 @@ def subject_chosen():
             #if session['role'] != 'admin':
             #    values = session['id']
             #else :
-            #    if 'id' in request.args:
-            values = request.args['id']
-                #else:
-                #    values = session['id']
+            if 'id' in request.args:
+                values = request.args['id']
+            else:
+                values = session['id']
             cursor.execute(sql,values)
             result = cursor.fetchall()
             print(result)
@@ -285,14 +285,14 @@ def update_user():
                 cursor.execute("SELECT * FROM students WHERE id = %s", request.args['id'])
                 result = cursor.fetchone()
         return render_template('update_user.html', result=result)
-#@app.route('/watch')
-#def watch():
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:                
-#            cursor.execute("INSERT INTO user_movie (user_id,movie_id) VALUES (%s,%s)",
-#                            (session['id'],request.args['id']))   
-#            connection.commit()               
-#    return redirect('/movie_watched')
+@app.route('/choose')
+def choose():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:                
+            cursor.execute("INSERT INTO student_subject (student_id,subject_id) VALUES (%s,%s)",
+                            (session['id'],request.args['id']))   
+            connection.commit()               
+    return redirect('/subject_chosen')
 @app.route('/list_subjects')
 def list_subjects():
     with create_connection() as connection:
