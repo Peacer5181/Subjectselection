@@ -47,7 +47,7 @@
     <Content Include="templates\setup.html" />
     <Content Include="templates\list_users.html" />
     <Content Include="templates\layout.html" />
-    <Content Include="templates\users_view.html" />
+    <Content Include="templates\view_user.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="static\" />

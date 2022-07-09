@@ -132,14 +132,14 @@ def list_users():
             result = cursor.fetchall()
     return render_template('list_users.html',data=result)
 
-## TODO: Add a '/profile' (view_user) route that uses SELECT
-#@app.route('/view')
-#def view_user():
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            cursor.execute("SELECT * FROM users WHERE id=%s", request.args['id'])
-#            result = cursor.fetchone()
-#    return render_template('users_view.html', result=result)
+# TODO: Add a '/profile' (view_user) route that uses SELECT
+@app.route('/view_user')
+def view_user():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE id=%s", request.args['id'])
+            result = cursor.fetchone()
+    return render_template('view_user.html', result=result)
 
 # TODO: Add a '/delete_user' route that uses DELETE
 @app.route('/delete_user')

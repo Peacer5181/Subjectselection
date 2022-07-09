@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}View profile{% endblock %}
+
+{% block content %}
+
+<h1>{{ result.First_name }} {{ result.Last_name }}</h1>
+
+<p><a href="mailto:{{ result.Email }}">{{ result.Email }}</a></p>
+
+<p>
+    <a href="/update_user?id={{ result.id }}">Edit</a>
+    <a href="/delete_user?id={{ result.id }}">Delete</a>
+</p>
+<p>
+    <a href="{{ url_for('list_users') }}">Back to dashboard</a>
+</p>
+
+{% endblock %}

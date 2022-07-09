@@ -20,17 +20,17 @@
         <td>{{ row.Year_level}}</td>
         <td>{{ row.Email}}</td>
         
-    <td>
-        <a href="/delete_user?id={{row.id}}">Delete</a>
-        <a href="/update_user?id={{row.id}}">Edit</a>
-        <a href="/subject_chosen?id={{row.id}}">Subject chosen</a>
-        {#<a href="/view?id={{row.id}}">View</a>
-        {% if session['role'] == 'admin' %}
-        
-        
-        
-        {% endif %}#}
-    </td>
+        <td>
+            <a href="/delete_user?id={{row.id}}">Delete</a>
+            <a href="/update_user?id={{row.id}}">Edit</a>
+            <a href="/subject_chosen?id={{row.id}}">Subject chosen</a>
+            <a href="/view_user?id={{row.id}}">View</a>
+            {#{% if session['role'] == 'admin' %}
+
+
+
+            {% endif %}#}
+        </td>
 
     </tr>
     {% endfor %}
