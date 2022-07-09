@@ -137,8 +137,12 @@ def list_users():
 def view_user():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM users WHERE id=%s", request.args['id'])
-            result = cursor.fetchone()
+            cursor.execute("""Select * FROM users 
+                    JOIN student_subject ON student_subject.student_id = users.id
+                    JOIN subjects ON subjects.id = student_subject.subject_id
+                    WHERE users.id = %s""", request.args['id'])
+            result = cursor.fetchall()
+            print(result)
     return render_template('view_user.html', result=result)
 
 # TODO: Add a '/delete_user' route that uses DELETE

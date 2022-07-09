@@ -4,14 +4,35 @@
 
 {% block content %}
 
-<h1>{{ result.First_name }} {{ result.Last_name }}</h1>
+<h1>{{ result[0].First_name }} {{ result[0].Last_name }}</h1>
 
-<p><a href="mailto:{{ result.Email }}">{{ result.Email }}</a></p>
+<p><a href="mailto:{{ result[0].Email }}">{{ result[0].Email }}</a></p>
 
 <p>
-    <a href="/update_user?id={{ result.id }}">Edit</a>
-    <a href="/delete_user?id={{ result.id }}">Delete</a>
+    <a href="/update_user?id={{ result[0].id }}">Edit</a>
+    <a href="/delete_user?id={{ result[0].id }}">Delete</a>
 </p>
+<table>
+    <tr>
+        <th>Subject</th>
+        <th>Faculty</th>
+        <th>Head of Faculty</th>
+        <th>Action</th>
+    </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{ row.Subject }}</td>
+        <td>{{ row.Faculty }}</td>
+        <td>{{ row.Head_of_faculty }}</td>
+        <td>
+            <a href="/delete_subject?id={{row.id}}">Delete</a>
+            <a href="/update_subject?id={{row.id}}">Update</a>
+            <a href="/choose?id={{row.id}}">Choose</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+</table>
 <p>
     <a href="{{ url_for('list_users') }}">Back to dashboard</a>
 </p>

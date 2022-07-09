@@ -6,6 +6,8 @@
         <th>ID</th>
         <th>Subject</th>
         <th>Description</th>
+        <th>Faculty</th>
+        <th>Head of Faculty</th>
         <th>Action</th>
     </tr>
     {% for row in data %}
@@ -13,6 +15,8 @@
         <td>{{ row.id }}</td>
         <td>{{ row.Subject }}</td>
         <td>{{ row.Description}}</td>
+        <td>{{ row.Faculty }}</td>
+        <td>{{ row.Head_of_faculty }}</td>
         <td>
             <a href="/delete_subject?id={{row.id}}">Delete</a>
             <a href="/update_subject?id={{row.id}}">Update</a>
@@ -20,5 +24,5 @@
         </td>
     </tr>
     {% endfor %}
-
+</table>
 {% endblock %}
