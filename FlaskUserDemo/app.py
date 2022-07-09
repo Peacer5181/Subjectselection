@@ -174,8 +174,8 @@ def delete_subject():
 def unchoose():        
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = """DELETE FROM student_subject WHERE id = %s"""
-            values = (request.args['id'])
+            sql = """DELETE FROM student_subject WHERE student_id = %s and subject_id = %s"""
+            values = (session['id'],request.args['id'])
             cursor.execute(sql, values)
             connection.commit()
     return redirect('/subject_chosen')
