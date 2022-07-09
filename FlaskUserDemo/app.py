@@ -19,7 +19,6 @@ def create_connection():
 def restrict():
     restricted_pages = [
         'list_users',
-        'add_user',
         'update_user',
         'add_subject',
         'update_subject',
@@ -308,7 +307,7 @@ def list_subjects():
 def check_email():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = "select * from users where email=%s "
+            sql = "SELECT * FROM users WHERE Email=%s "
             values = (
                 request.args['email']
             )

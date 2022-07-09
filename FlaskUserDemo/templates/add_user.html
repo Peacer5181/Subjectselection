@@ -20,7 +20,7 @@
 
     <label for="email">Email</label>
     <input type="email" id="email" name="email"  />
-    <!--<p id="message"></p>-->
+    <p id="message"></p>
     <br />
 
     <label for="pwd">Password</label>
@@ -29,7 +29,7 @@
 
     <input type="submit" value="Sign Up !" />
 </form>
-<!--<script>
+<script>
     let emailInput = document.querySelector('#email');
     let message = document.querySelector("#message");
 
@@ -39,7 +39,7 @@
         let response = await fetch("/checkemail?email=" + emailInput.value);
         let json = await response.json();
 
-        if (json.status == 'OK') {
+        if (json.status == 'ok') {
             message.style.color = 'green';
             message.textContent = 'Email available';
         } else {
@@ -48,5 +48,5 @@
         }
         
     }
-</script>-->
+</script>
 {% endblock %}
