@@ -170,15 +170,15 @@ def delete_subject():
             cursor.execute(sql, values)
             connection.commit()
     return redirect('/list_subjects')
-#@app.route('/unwatch')
-#def unwatch():        
-#    with create_connection() as connection:
-#        with connection.cursor() as cursor:
-#            sql = """DELETE FROM user_movie WHERE id = %s"""
-#            values = (request.args['id'])
-#            cursor.execute(sql, values)
-#            connection.commit()
-#    return redirect('/')
+@app.route('/unchoose')
+def unchoose():        
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """DELETE FROM student_subject WHERE id = %s"""
+            values = (request.args['id'])
+            cursor.execute(sql, values)
+            connection.commit()
+    return redirect('/subject_chosen')
 @app.route('/subject_chosen')
 def subject_chosen():
     with create_connection() as connection:

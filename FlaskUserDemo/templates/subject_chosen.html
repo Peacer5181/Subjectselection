@@ -8,6 +8,7 @@
         <th>Last name</th>
         <th>Year level</th>
         <th>Subject</th>
+        <th>Action</th>
     </tr>
     {% for row in result %}
     <tr>
@@ -15,9 +16,9 @@
         <td>{{ row.Last_name }}</td>
         <td>{{ row.Year_level }}</td>
         <td>{{ row.Subject }}</td>
-        <!--<td>
-            <a href="/unwatch?id={{row['user_movie.id']}}">Unwatch</a>
-        </td>-->
+        <td>
+            <a href="/unchoose?id={{row['student_subject.id']}}">Unchoose</a>
+        </td>
     </tr>
     {% endfor %}
 </table>
